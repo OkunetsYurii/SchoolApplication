@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Question Page";
+}
+<p class="text-center" id="questionText">
+</p>
+<div id="answers" class="form-check">
+</div>
+<div>
+    <input id="nextQuestionButton" type="button" class="btn btn-dark" value="Ответить" onclick="GetNextQuestion()" />
+    <input id="resultButton" type="button" class="btn btn-dark" value="Result" onclick="Result()" hidden />
+</div>
+@section Scripts{
+    <script>
+        const answersElement = document.getElementById("answers");
+        const resultButton = document.getElementById("resultButton");
+        const nextQuestionButton = document.getElementById("nextQuestionButton");
+
+        GetQuestion();
+
+        async function GetQuestion() {
+            const responce = await fetch("/Test/GetQuestion", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            })
+            if (responce.ok === true) {
+                const question = await responce.json();
+                if (question.isLast === true) {
+                    resultButton.hidden = false;
+                    nextQuestionButton.hidden = true;
+                }
+                CreateRadio(question);
+            }
+        }
+
+        async function GetNextQuestion() {
+            var selectedAnswer;
+            answersElement.childNodes.forEach(radio => {
+                if (radio.checked)
+                    selectedAnswer = radio.value;
+            })
+            const responce = await fetch("/Test/GetNextQuestion?answerId=" + selectedAnswer, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            })
+            if (responce.ok === true) {
+                const question = await responce.json();
+                if (question.isLast === true) {
+                    resultButton.hidden = false;
+                    nextQuestionButton.hidden = true;
+                }
+                CreateRadio(question);
+            }
+        }
+
+        function Result() {
+            var selectedAnswer;
+            answersElement.childNodes.forEach(radio => {
+                if (radio.checked)
+                    selectedAnswer = radio.value;
+            })
+            location.href = '@Url.Action("Result")' + "?answerId=" + selectedAnswer;
+        }
+
+        function CreateRadio(question) {
+            questionText.innerHTML = null;
+            questionText.innerHTML = question.question.text;
+            answersElement.innerHTML = null;
+            question.question.answers.forEach(answer => {
+                radio = document.createElement("input");
+                radio.className = "form-check-input";
+                radio.type = "radio";
+                radio.name = "answer";
+                radio.value = answer.id;
+                radio.id = "radio" + answer.id;
+                label = document.createElement("label");
+                label.className = "form-check-label";
+                label.for = "radio" + answer.id;
+                label.innerHTML = answer.text;
+                answersElement.appendChild(radio);
+                answersElement.appendChild(label);
+                answersElement.appendChild(document.createElement("br"));
+            })
+        }
+
+    </script>
+}

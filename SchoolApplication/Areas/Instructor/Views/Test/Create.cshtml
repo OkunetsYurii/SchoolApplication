@@ -1,0 +1,191 @@
+﻿@model SchoolApplication.Models.Test
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Test</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @*<form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input name="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input name="Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input name="Questions[0].Text" class="form-control" />
+                <input name="Questions[0].Answers[0].Text" class="form-control" />
+                <input name="Questions[0].Answers[1].Text" class="form-control" />
+                <input name="Questions[0].Answers[2].Text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Create" />
+            </div>
+        </form>
+        <br />
+        <br />*@
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div id="appendedQuestions" class="form-group">
+            </div>
+            <br />
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="Create" />
+            </div>
+        </form>
+        <div>
+            <input class="btn btn-primary" type="button" value="Add question" onclick="questionInput.hidden = false" />
+        </div>
+        <div id="questionInput" class="form-group overflow-scroll" hidden>
+            <label class="control-label">
+                Вопрос
+            </label>
+            <input id="questionTextInput" class="form-control" type="text" />
+            <label class="control-label">
+                Правильный ответ
+            </label>
+            <select id="correctAnswersSelect" class="form-control">
+            </select>
+            <div id="answersInput" class="form-group">
+                <div id="addedAnswers">
+                </div>
+                <label id="answerInputRowLabel" class="control-label">
+                    Добавить ответ
+                </label>
+                <input id="answerInputRow" class="form-control" type="text"
+                       onblur="AppendNewAnswerRow()" oninput="isStartQuestionInput=true" />
+
+            </div>
+            <input class="btn btn-primary" type="button" value="Apply" onclick="ApplyQuestion()" />
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var isStartQuestionInput = false;
+
+        function AppendNewAnswerRow() {
+
+            if (!isStartQuestionInput)
+                return;
+
+            var rowLabel = document.createElement("label");
+            rowLabel.className = "control-label";
+            rowLabel.innerHTML = "Ответ " + (addedAnswers.childElementCount / 2 + 1);
+
+            var row = document.createElement("input");
+            row.className = "form-control";
+            row.type = "text";
+            row.value = answerInputRow.value;
+
+            var selectOption = document.createElement("option");
+            selectOption.innerHTML = answerInputRow.value;
+
+            answerInputRow.value = null;
+
+            correctAnswersSelect.appendChild(selectOption);
+            addedAnswers.appendChild(rowLabel);
+            addedAnswers.appendChild(row);
+            isStartQuestionInput = false;
+        }
+
+        var currentQuestionNumber;
+
+        function ApplyQuestion() {
+            currentQuestionNumber = appendedQuestions.childElementCount;
+
+            var collapseButton = document.createElement("button");
+            collapseButton.className = "btn btn-link";
+            collapseButton.type = "button";
+            collapseButton.setAttribute("data-toggle", "collapse");
+            collapseButton.setAttribute("data-target", "#collapse" + currentQuestionNumber);
+            collapseButton.setAttribute("aria-expanded", "true");
+            collapseButton.setAttribute("aria-controls", "collapse" + currentQuestionNumber);
+            collapseButton.innerHTML = questionTextInput.value;
+
+            var inputForQuestionText = CreateHiddenInput(`Questions[${currentQuestionNumber}].Text`, questionTextInput.value);
+
+            var container = document.createElement("h5");
+            container.setAttribute("class", "mb-0");
+
+            container.appendChild(collapseButton);
+            container.appendChild(inputForQuestionText);
+
+            var questionCardHeader = document.createElement("div");
+            questionCardHeader.id = "questionHeader" + currentQuestionNumber;
+            questionCardHeader.className = "card-header";
+
+            questionCardHeader.appendChild(container);
+
+            var questionCardBody = document.createElement("div");
+            questionCardBody.className = "card-body";
+
+            var collapseArea = document.createElement("div");
+            collapseArea.id = "collapse" + currentQuestionNumber;
+            collapseArea.className = "collapse";
+            collapseArea.setAttribute("aria-labelledby", "questionHeader" + currentQuestionNumber);
+            collapseArea.setAttribute("data-parent", "#appendedQuestions");
+
+            collapseArea.appendChild(questionCardBody);
+
+            var questionCardDiv = document.createElement("div");
+            questionCardDiv.className = "card";
+
+            questionCardDiv.appendChild(questionCardHeader);
+            questionCardDiv.appendChild(collapseArea);
+
+            appendedQuestions.appendChild(questionCardDiv);
+
+            $('#addedAnswers :input').each(function (index) {
+
+                var pQuestionText = document.createElement("p");
+                pQuestionText.innerHTML = $(this).val();
+
+                if (correctAnswersSelect.value == $(this).val())
+                    pQuestionText.setAttribute("style", "color: lime;");
+
+                var inputForAnswerText = CreateHiddenInput(`Questions[${currentQuestionNumber}].Answers[${index}].Text`, $(this).val());
+
+                questionCardBody.appendChild(pQuestionText);
+                questionCardBody.appendChild(inputForAnswerText);
+            });
+
+            $('#addedAnswers').empty();
+            $('#correctAnswersSelect').empty();
+            questionTextInput.value = null;
+
+            questionInput.hidden = true;
+        }
+
+        function CreateHiddenInput(inputName, inputValue) {
+            var input = document.createElement("input");
+            input.className = "form-control";
+            input.name = inputName;
+            input.value = inputValue;
+            input.hidden = true;
+            return input;
+        }
+    </script>
+}

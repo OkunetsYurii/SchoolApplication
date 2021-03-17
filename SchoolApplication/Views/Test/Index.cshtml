@@ -1,0 +1,25 @@
+﻿@model ICollection<UserTest>
+@{
+    ViewData["Title"] = "Course Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Course name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var a in Model)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@a.Id">@a.Test.Name</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
