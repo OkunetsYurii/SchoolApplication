@@ -17,6 +17,6 @@ namespace SchoolApplication.Models.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        public bool IsInstructor { get; set; }
+        public bool IsAuthor { get; set; }
     }
 }

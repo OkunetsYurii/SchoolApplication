@@ -47,19 +47,6 @@ namespace SchoolApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tests", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -166,6 +153,26 @@ namespace SchoolApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    AuthorId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tests_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
@@ -185,37 +192,12 @@ namespace SchoolApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserTests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: false),
-                    TestId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTests", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserTests_Tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "Tests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserTests_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Answers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Text = table.Column<string>(nullable: false),
-                    QuestionId = table.Column<Guid>(nullable: true)
+                    QuestionId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -225,7 +207,7 @@ namespace SchoolApplication.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -250,17 +232,17 @@ namespace SchoolApplication.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "44546e06-8719-4ad8-b88a-f271ae9d6eab", "d121922e-d8bd-4861-861b-387d186adf22", "admin", "ADMIN" });
+                values: new object[] { "44546e06-8719-4ad8-b88a-f271ae9d6eab", "3044ae05-9128-4f31-b4b6-5f3a7f37dc71", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "eaf7b189-75ba-47b7-862f-9c31da2b313c", "6b21af4c-82e7-434d-90d8-fd740d1fd936", "instructor", "INSTRUCTOR" });
+                values: new object[] { "eaf7b189-75ba-47b7-862f-9c31da2b313c", "3637ae6f-0a73-410f-bb3e-b9f0648335d7", "author", "AUTHOR" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "17014e2f-f608-4bf4-bf7f-2c158998bf6f", "okunets2010@gmail.com", true, false, null, "OKUNETS2010@GMAIL.COM", "OKUNETS2010@GMAIL.COM", "AQAAAAEAACcQAAAAELox6Roy8ddZahjJly4gr/XTQqTnQtVbxMhdQj2NjHYm5PO/jjmf3ndPE9nEE+hKQw==", null, false, "", false, "okunets2010@gmail.com" });
+                values: new object[] { "3b62472e-4f66-49fa-a20f-e7685b9565d8", 0, "e2958651-54bc-4fd2-ba2d-2ce1d38f1f48", "okunets2010@gmail.com", true, false, null, "OKUNETS2010@GMAIL.COM", "OKUNETS2010@GMAIL.COM", "AQAAAAEAACcQAAAAEKsjXNOd19DJJa9VDoSXPP+Ey/RpH9WtQ+/pVVab6uNp01V+uK0kf70bc4USZqcLzA==", null, false, "", false, "okunets2010@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -327,14 +309,9 @@ namespace SchoolApplication.Migrations
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserTests_TestId",
-                table: "UserTests",
-                column: "TestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserTests_UserId",
-                table: "UserTests",
-                column: "UserId");
+                name: "IX_Tests_AuthorId",
+                table: "Tests",
+                column: "AuthorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -361,19 +338,16 @@ namespace SchoolApplication.Migrations
                 name: "CorrectAnswers");
 
             migrationBuilder.DropTable(
-                name: "UserTests");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Tests");
 
             migrationBuilder.DropTable(
-                name: "Tests");
+                name: "AspNetUsers");
         }
     }
 }

@@ -57,8 +57,8 @@ namespace SchoolApplication.Controllers
                 if (result.Succeeded)
                 {
                     //TODO Добавить обработку ошибки добавления
-                    if (registration.IsInstructor)
-                        await _userManager.AddToRoleAsync(user, "instructor");
+                    if (registration.IsAuthor)
+                        await _userManager.AddToRoleAsync(user, "author");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");

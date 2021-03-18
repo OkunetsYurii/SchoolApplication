@@ -49,16 +49,16 @@ namespace SchoolApplication.Migrations
                         new
                         {
                             Id = "44546e06-8719-4ad8-b88a-f271ae9d6eab",
-                            ConcurrencyStamp = "47b1ed1c-ef1b-4c20-b307-0245cfe91ab8",
+                            ConcurrencyStamp = "3044ae05-9128-4f31-b4b6-5f3a7f37dc71",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "eaf7b189-75ba-47b7-862f-9c31da2b313c",
-                            ConcurrencyStamp = "c7870970-96ef-4513-b0eb-739c2ad6dd64",
-                            Name = "instructor",
-                            NormalizedName = "INSTRUCTOR"
+                            ConcurrencyStamp = "3637ae6f-0a73-410f-bb3e-b9f0648335d7",
+                            Name = "author",
+                            NormalizedName = "AUTHOR"
                         });
                 });
 
@@ -155,13 +155,13 @@ namespace SchoolApplication.Migrations
                         {
                             Id = "3b62472e-4f66-49fa-a20f-e7685b9565d8",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "98549d90-be74-4c7e-b660-8420b3d787ba",
+                            ConcurrencyStamp = "e2958651-54bc-4fd2-ba2d-2ce1d38f1f48",
                             Email = "okunets2010@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "OKUNETS2010@GMAIL.COM",
                             NormalizedUserName = "OKUNETS2010@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJgUJC4pXd33mmXQzcGYfILMeVM0oTc85OClAOooDCaybK2EOjPomZpg1Ir+j+oOwA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKsjXNOd19DJJa9VDoSXPP+Ey/RpH9WtQ+/pVVab6uNp01V+uK0kf70bc4USZqcLzA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -267,7 +267,7 @@ namespace SchoolApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("QuestionId")
+                    b.Property<Guid>("QuestionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
@@ -300,27 +300,6 @@ namespace SchoolApplication.Migrations
                     b.ToTable("CorrectAnswers");
                 });
 
-            modelBuilder.Entity("SchoolApplication.Models.News", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AttachedLink")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AttachedLinkName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("News");
-                });
-
             modelBuilder.Entity("SchoolApplication.Models.Question", b =>
                 {
                     b.Property<Guid>("Id")
@@ -347,13 +326,12 @@ namespace SchoolApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InstructorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -361,31 +339,9 @@ namespace SchoolApplication.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InstructorId");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Tests");
-                });
-
-            modelBuilder.Entity("SchoolApplication.Models.UserTest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TestId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserTests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -443,7 +399,9 @@ namespace SchoolApplication.Migrations
                 {
                     b.HasOne("SchoolApplication.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SchoolApplication.Models.CorrectAnswer", b =>
@@ -466,26 +424,9 @@ namespace SchoolApplication.Migrations
 
             modelBuilder.Entity("SchoolApplication.Models.Test", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Instructor")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Author")
                         .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SchoolApplication.Models.UserTest", b =>
-                {
-                    b.HasOne("SchoolApplication.Models.Test", "Test")
-                        .WithMany("UserCourses")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId");
                 });
 #pragma warning restore 612, 618
         }

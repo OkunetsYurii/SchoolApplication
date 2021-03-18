@@ -1,6 +1,6 @@
 ﻿@model SchoolApplication.Models.ViewModels.Registration
 
-<h2>Registration</h2>
+<h2>Регистрация</h2>
 
 <form asp-action="Registration" asp-anti-forgery="true">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
@@ -21,9 +21,9 @@
             <span asp-validation-for="ConfirmPassword" />
         </div>
         <div>
-            <label asp-for="IsInstructor">Регистрация в качестве куратура курса</label><br />
-            <input type="checkbox" asp-for="IsInstructor" />
-            <span asp-validation-for="IsInstructor" />
+            <label asp-for="IsAuthor">Регистрация в качестве создателя тестов</label><br />
+            <input type="checkbox" asp-for="IsAuthor" />
+            <span asp-validation-for="IsAuthor" />
         </div>
         <div>
             <input type="submit" value="Войти" />

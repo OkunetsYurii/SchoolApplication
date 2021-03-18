@@ -44,7 +44,7 @@ namespace SchoolApplication
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("InstructorArea", policy => { policy.RequireRole("instructor"); });
+                options.AddPolicy("AuthorArea", policy => { policy.RequireRole("author"); });
                 options.AddPolicy("AdminArea", policy => { policy.RequireRole("admin"); });
             });
 
@@ -81,7 +81,7 @@ namespace SchoolApplication
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "Instructor",
+                    name: "Author",
                     pattern: "{area:exists}/{controller=Tests}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(

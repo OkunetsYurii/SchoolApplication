@@ -1,4 +1,4 @@
-﻿@model ICollection<UserTest>
+﻿@model ICollection<Test>
 @{
     ViewData["Title"] = "Course Page";
 }
@@ -16,7 +16,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-action="Details" asp-route-id="@a.Id">@a.Test.Name</a>
+                        <a asp-action="Details" asp-route-id="@a.Id">@a.Name</a>
                     </td>
                 </tr>
             }

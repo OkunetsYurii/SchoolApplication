@@ -15,10 +15,7 @@ namespace SchoolApplication.Models
 
         [Required]
         public string Description { get; set; }
-
-        [Required]
-        public IdentityUser Instructor { get; set; }
-        public ICollection<UserTest> UserCourses { get; set; }
+        public IdentityUser Author { get; set; }
         public ICollection<Question> Questions { get; set; }
     }
 

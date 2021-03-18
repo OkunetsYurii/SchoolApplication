@@ -10,8 +10,8 @@ using SchoolApplication.Models;
 
 namespace SchoolApplication.Areas.Instructor
 {
-    [Area("Instructor")]
-    [Authorize(policy: "InstructorArea")]
+    [Area("Author")]
+    [Authorize(policy: "AuthorArea")]
     public class TestController : Controller
     {
         private readonly SchoolDbContext _context;
@@ -26,7 +26,7 @@ namespace SchoolApplication.Areas.Instructor
         public async Task<IActionResult> Index()
         {
             return View(await _context.Tests
-                .Where(u => u.Instructor.Email == User.Identity.Name)
+                .Where(u => u.Author.Email == User.Identity.Name)
                 .AsNoTracking()
                 .ToListAsync());
         }
@@ -66,7 +66,7 @@ namespace SchoolApplication.Areas.Instructor
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(User.Identity.Name);
-                test.Instructor = user;
+                test.Author = user;
                 _context.Add(test);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -74,7 +74,7 @@ namespace SchoolApplication.Areas.Instructor
             return View(test);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {

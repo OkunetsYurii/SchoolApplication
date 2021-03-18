@@ -8,12 +8,9 @@ namespace SchoolApplication.Data
     public class SchoolDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Test> Tests { get; set; }
-        public DbSet<UserTest> UserTests { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<CorrectAnswer> CorrectAnswers { get; set; }
-        public DbSet<News> News { get; set; }
-
 
         public SchoolDbContext(DbContextOptions options) :
             base(options)
@@ -32,8 +29,8 @@ namespace SchoolApplication.Data
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             {
                 Id = "eaf7b189-75ba-47b7-862f-9c31da2b313c",
-                Name = "instructor",
-                NormalizedName = "INSTRUCTOR"
+                Name = "author",
+                NormalizedName = "AUTHOR"
             });
 
             modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser

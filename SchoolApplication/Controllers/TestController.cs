@@ -25,13 +25,11 @@ namespace SchoolApplication.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            List<UserTest> userCourses = await _db.UserTests
-                .Where(u => u.User.Email == User.Identity.Name)
-                .Include(u => u.Test)
+            List<Test> tests = await _db.Tests
                 .AsNoTracking()
                 .ToListAsync();
 
-            return View(userCourses);
+            return View(tests);
         }
         public async Task<IActionResult> Details(Guid? id)
         {
