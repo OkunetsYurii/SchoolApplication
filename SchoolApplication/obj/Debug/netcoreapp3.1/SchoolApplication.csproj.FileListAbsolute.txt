@@ -170,3 +170,6 @@ E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razo
 E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razor\Areas\Author\Views\Test\Index.cshtml.g.cs
 E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razor\Areas\Author\Views\_ViewImports.cshtml.g.cs
 E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razor\Areas\Author\Views\_ViewStart.cshtml.g.cs
+E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razor\Areas\Author\Views\Test\Components\QuestionsAccordion\Default.cshtml.g.cs
+E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razor\Areas\Author\Views\Test\_QuestionInput.cshtml.g.cs
+E:\source\repos\SchoolApplication\SchoolApplication\obj\Debug\netcoreapp3.1\Razor\Views\Test\_Question.cshtml.g.cs

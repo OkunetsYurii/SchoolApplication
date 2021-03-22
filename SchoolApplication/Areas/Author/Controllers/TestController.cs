@@ -82,6 +82,11 @@ namespace SchoolApplication.Areas.Instructor
             }
 
             var test = await _context.Tests.FindAsync(id);
+            await _context.Entry(test).Collection(t => t.Questions).LoadAsync();
+
+            foreach (var question in test.Questions)
+                await _context.Entry(question).Collection(q => q.Answers).LoadAsync();
+
             if (test == null)
             {
                 return NotFound();
@@ -91,7 +96,7 @@ namespace SchoolApplication.Areas.Instructor
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name,Description")] Test test)
+        public async Task<IActionResult> Edit(Guid id, Test test)
         {
             if (id != test.Id)
             {

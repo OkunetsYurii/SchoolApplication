@@ -1,17 +1,31 @@
-﻿@{
+﻿@model QuestionVM
+@{
     ViewData["Title"] = "Question Page";
 }
-<p class="text-center" id="questionText">
-</p>
-<div id="answers" class="form-check">
-</div>
-<div>
-    <input id="nextQuestionButton" type="button" class="btn btn-dark" value="Ответить" onclick="GetNextQuestion()" />
-    <input id="resultButton" type="button" class="btn btn-dark" value="Result" onclick="Result()" hidden />
+<div id="questionControl" class="form-check">
+    @await Html.PartialAsync("_Question", Model);
 </div>
 @section Scripts{
     <script>
-        const answersElement = document.getElementById("answers");
+        $("#nextQuestionButton").click(function () {
+            var selectedAnswer;
+            answersElement.childNodes.forEach(radio => {
+                if (radio.checked)
+                    selectedAnswer = radio.value;
+            })
+            $("#questionControl").load('@Url.Action("GetNextQuestion")?');
+        })
+
+        $("#resultButton").click(function () {
+            //var selectedAnswer;
+            //answersElement.childNodes.forEach(radio => {
+            //    if (radio.checked)
+            //        selectedAnswer = radio.value;
+            //})
+            $("#questionControl").load('@Url.Action("GetResult")');
+        })
+
+        @*const answersElement = document.getElementById("answers");
         const resultButton = document.getElementById("resultButton");
         const nextQuestionButton = document.getElementById("nextQuestionButton");
 
@@ -80,7 +94,7 @@
                 answersElement.appendChild(label);
                 answersElement.appendChild(document.createElement("br"));
             })
-        }
+        }*@
 
     </script>
 }

@@ -58,7 +58,7 @@ namespace SchoolApplication.Services
                 QuestionNumber = 0;
         }
 
-        public async Task AcceptAnswer(int answerId)
+        public async Task AcceptAnswer(Guid answerId)
         {
             if (await QuestionProvider.CheckAnswer((int)QuestionNumber, answerId))
                 CountCorrectAnswers++;

@@ -11,7 +11,7 @@ namespace SchoolApplication.Services
         public void StartTest(Guid? testId);
         public QuestionVM GetQuestion();
         public QuestionVM GetNextQuestion();
-        public Task AcceptAnswer(int answerId);
+        public Task AcceptAnswer(Guid answerId);
         public Result GetResult();
         public void EndTest();
     }

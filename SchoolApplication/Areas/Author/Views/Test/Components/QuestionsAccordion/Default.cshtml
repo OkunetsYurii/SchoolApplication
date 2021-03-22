@@ -1,0 +1,47 @@
+﻿@model QuestionAccordion
+@if (Model != null)
+{
+    <div id="@Model.Id" class="@Model.Class">
+        @for (int qIndex = 0; qIndex < Model.Questions.Count; qIndex++)
+        {
+            var question = Model.Questions.ElementAt(qIndex);
+            string cardHeaderId = "cardHeader" + qIndex;
+            string collapsAreaId = "collapsArea" + qIndex;
+            <div class="card">
+                <div class="card-header" id="@cardHeaderId">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@collapsAreaId" aria-expanded="true" aria-controls="@collapsAreaId">
+                            @question.Text
+                        </button>
+                        @if (Model.UseHiddenInput)
+                        {
+                            <input class="form-control" name="Questions[@qIndex].Text" value="@question.Text" hidden>
+                        }
+                    </h5>
+                </div>
+                <div id="@collapsAreaId" class="collapse" aria-labelledby="@cardHeaderId" data-parent="#@Model.Id">
+                    <div class="card-body">
+                        @if (Model.UseHiddenInput)
+                        {
+                            @for (int aIndex = 0; aIndex < question.Answers.Count; aIndex++)
+                            {
+                                var answer = question.Answers.ElementAt(aIndex);
+                                <p name="Questions[@qIndex].Answers[@aIndex]">@answer.Text</p>
+                                <input class="form-control" name="Questions[@qIndex].Answers[aIndex]" value="@answer.Text" hidden>
+                            }
+                        }
+                        else
+                        {
+                            @for (int aIndex = 0; aIndex < question.Answers.Count; aIndex++)
+                            {
+                                <p name="Questions[@qIndex].Answers[@aIndex]">@question.Answers.ElementAt(aIndex).Text</p>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+

@@ -1,0 +1,20 @@
+﻿@model QuestionVM
+<p class="text-center" id="questionText">@Model.Question.Text</p>
+<div id="answers" class="form-check">
+    @foreach (Answer answer in Model.Question.Answers)
+    {
+        <input id="@answer.Id" class="form-check-input" type="radio" value="@answer.Id" />
+        <label class="form-check-label" for="@answer.Id">@answer.Text</label>
+        <br />
+    }
+</div>
+<div>
+    @if (Model.IsLast)
+    {
+        <input id="resultButton" type="button" class="btn btn-dark" value="Закончить тест"/>
+    }
+    else
+    {
+        <input id="nextQuestionButton" type="button" class="btn btn-dark" value="Ответить"/>
+    }
+</div>

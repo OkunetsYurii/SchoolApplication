@@ -8,7 +8,7 @@ namespace SchoolApplication.Services
     {
         public Guid TestId { get; set; }
         public QuestionVM GetQuestion(int questionNumber);
-        public Task<bool> CheckAnswer(int questionNumber, int answerId);
+        public Task<bool> CheckAnswer(int questionNumber, Guid answerId);
 
     }
 }

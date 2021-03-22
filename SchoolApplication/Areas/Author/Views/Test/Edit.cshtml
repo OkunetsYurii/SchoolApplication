@@ -23,6 +23,16 @@
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            @{
+                var settings = new QuestionAccordion
+                {
+                    Id = "accordion",
+                    Class = "form-group",
+                    Questions = Model.Questions,
+                    UseHiddenInput = true
+                };
+            }
+            <vc:questions-accordion settings="settings"></vc:questions-accordion>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

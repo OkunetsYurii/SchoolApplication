@@ -34,30 +34,28 @@
         </div>
     </div>
     <div class="col-md-1"></div>
-    <div class="col-md-4">
-        <div id="questionInput" class="form-group overflow-scroll" hidden>
-            <label class="control-label">
-                Вопрос
-            </label>
-            <textarea id="questionTextInput" class="form-control" type="text" rows="3"></textarea>
-            <label class="control-label">
-                Правильный ответ
-            </label>
-            <select id="correctAnswersSelect" class="form-control">
-            </select>
-            <div id="answersInput" class="form-group">
-                <div id="addedAnswers">
-                </div>
-                <label id="answerInputRowLabel" class="control-label">
-                    Добавить ответ
-                </label>
-                <input id="answerInputRow" class="form-control" type="text"
-                       onblur="AppendNewAnswerRow()" oninput="isStartQuestionInput=true" />
-
+    <div id="questionInput" class="col-md-4" hidden>
+        <label class="control-label">
+            Вопрос
+        </label>
+        <textarea id="questionTextInput" class="form-control" type="text" rows="3"></textarea>
+        <label class="control-label">
+            Правильный ответ
+        </label>
+        <select id="correctAnswersSelect" class="form-control">
+        </select>
+        <div id="answersInput" class="form-group">
+            <div id="addedAnswers">
             </div>
-            <input class="btn btn-primary" type="button" value="Apply" onclick="ApplyQuestion()" />
+            <label id="answerInputRowLabel" class="control-label">
+                Добавить ответ
+            </label>
+            <input id="answerInputRow" class="form-control" type="text" />
         </div>
+        <input id="questionInputApply" class="btn btn-primary" type="button" value="Apply"/>
     </div>
+
+    @*@await Html.PartialAsync("_QuestionInput", "col-md-4")*@
 </div>
 
 
@@ -68,11 +66,12 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        var isStartQuestionInput = false;
+        $("#answerInputRow").on("blur", AppendNewAnswerRow);
+        $("#questionInputApply").on("click", ApplyQuestion);
 
         function AppendNewAnswerRow() {
 
-            if (!isStartQuestionInput)
+            if (!Boolean(answerInputRow.value))
                 return;
 
             var rowLabel = document.createElement("label");
@@ -92,13 +91,10 @@
             correctAnswersSelect.appendChild(selectOption);
             addedAnswers.appendChild(rowLabel);
             addedAnswers.appendChild(row);
-            isStartQuestionInput = false;
         }
 
-        var currentQuestionNumber;
-
         function ApplyQuestion() {
-            currentQuestionNumber = appendedQuestions.childElementCount;
+            var currentQuestionNumber = appendedQuestions.childElementCount;
 
             var collapseButton = document.createElement("button");
             collapseButton.className = "btn btn-link";
@@ -146,6 +142,7 @@
 
                 var pQuestionText = document.createElement("p");
                 pQuestionText.innerHTML = $(this).val();
+                pQuestionText.setAttribute("style", "margin:0px;")
 
                 if (correctAnswersSelect.value == $(this).val())
                     pQuestionText.setAttribute("style", "color: lime;");

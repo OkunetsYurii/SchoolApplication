@@ -26,8 +26,15 @@ using SchoolApplication.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "E:\source\repos\SchoolApplication\SchoolApplication\Views\_ViewImports.cshtml"
+using SchoolApplication.Models.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"24a5a4ec73a60936a581eb7bddac1bf809b00bf8", @"/Views/Test/Details.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"71bb644eaa67d929135e741cf2b4d724e72fe23b", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"10137d2691f0d36aac1c96a3e2d9c1c1f8d35e5a", @"/Views/_ViewImports.cshtml")]
     public class Views_Test_Details : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<Test>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", "hidden", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -83,9 +90,9 @@ using SchoolApplication.Models;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n    </p>\r\n</div>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "24a5a4ec73a60936a581eb7bddac1bf809b00bf84716", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "24a5a4ec73a60936a581eb7bddac1bf809b00bf84918", async() => {
                 WriteLiteral("\r\n    <div>\r\n        <div class=\"form-check\">\r\n            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "24a5a4ec73a60936a581eb7bddac1bf809b00bf85037", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "24a5a4ec73a60936a581eb7bddac1bf809b00bf85239", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();

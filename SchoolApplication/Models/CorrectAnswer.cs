@@ -8,7 +8,7 @@ namespace SchoolApplication.Models
         public Guid Id { get; set; }
 
         [Required]
-        public int AnswerNumber { get; set; }
+        public Guid AnswerId { get; set; }
         public Guid QuestionId { get; set; }
         public Question Question { get; set; }
     }

@@ -1,0 +1,22 @@
+﻿@model string 
+<div id="questionInput" class="@Model" hidden>
+    <label for="questionTextInput">
+        Вопрос
+    </label>
+    <textarea id="questionTextInput" class="form-control" type="text" rows="3"></textarea>
+    <label>
+        Правильный ответ
+    </label>
+    <select id="correctAnswersSelect" class="form-control">
+    </select>
+    <div id="answersInput">
+        <div id="addedAnswers">
+        </div>
+        <label id="answerInputRowLabel" class="control-label">
+            Добавить ответ
+        </label>
+        <input id="answerInputRow" class="form-control" type="text"
+               onblur="AppendNewAnswerRow()" oninput="isStartQuestionInput=true" />
+    </div>
+    <input class="btn btn-primary" type="button" value="Apply" onclick="ApplyQuestion()" />
+</div>

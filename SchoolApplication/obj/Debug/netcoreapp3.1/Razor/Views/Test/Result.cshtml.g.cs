@@ -26,8 +26,15 @@ using SchoolApplication.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 3 "E:\source\repos\SchoolApplication\SchoolApplication\Views\_ViewImports.cshtml"
+using SchoolApplication.Models.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3e55db63b71a4f5ed4988f4085e4cf0d137b1a0f", @"/Views/Test/Result.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"71bb644eaa67d929135e741cf2b4d724e72fe23b", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"10137d2691f0d36aac1c96a3e2d9c1c1f8d35e5a", @"/Views/_ViewImports.cshtml")]
     public class Views_Test_Result : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<SchoolApplication.Models.ViewModels.Result>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Index", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -64,7 +71,7 @@ using SchoolApplication.Models;
 #line hidden
 #nullable disable
             WriteLiteral(" correct answers\r\n</p>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3e55db63b71a4f5ed4988f4085e4cf0d137b1a0f3670", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3e55db63b71a4f5ed4988f4085e4cf0d137b1a0f3872", async() => {
                 WriteLiteral("Return to list");
             }
             );

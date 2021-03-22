@@ -39,11 +39,11 @@ namespace SchoolApplication.Services
         {
             _db = schoolContext;
         }
-        public async Task<bool> CheckAnswer(int questionNumber, int answerId)
+        public async Task<bool> CheckAnswer(int questionNumber, Guid answerId)
         {
             var isCorrect = await _db.CorrectAnswers.AnyAsync(a =>
                 a.QuestionId == Questions[questionNumber].Id &&
-                a.AnswerNumber == answerId);
+                a.AnswerId == answerId);
 
             return isCorrect;
         }

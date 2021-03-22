@@ -42,7 +42,7 @@ namespace SchoolApplication.Controllers
 
             return View(test);
         }
-        public async Task<IActionResult> Result(int answerId)
+        public async Task<IActionResult> Result(Guid answerId)
         {
             await _testProvider.AcceptAnswer(answerId);
             var result = _testProvider.GetResult();
@@ -56,18 +56,17 @@ namespace SchoolApplication.Controllers
                 return RedirectToAction(nameof(Index));
 
             _testProvider.StartTest(id);
-            return View();
-        }
 
-        public async Task<ActionResult<QuestionVM>> GetNextQuestion(int answerId)
+            return View(_testProvider.GetQuestion());
+        }
+        public PartialViewResult GetQuestion()
+        {
+            return PartialView("_Question", _testProvider.GetQuestion());
+        }
+        public async Task<PartialViewResult> GetNextQuestion(Guid answerId)
         {
             await _testProvider.AcceptAnswer(answerId);
-            return _testProvider.GetNextQuestion();
+            return PartialView("_Question", _testProvider.GetNextQuestion());
         }
-        public ActionResult<QuestionVM> GetQuestion()
-        {
-            return _testProvider.GetQuestion();
-        }
-
     }
 }

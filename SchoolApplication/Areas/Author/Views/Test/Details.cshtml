@@ -23,30 +23,14 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
-    <div id="accordion">
-        @foreach (Question question in Model.Questions)
+    @{ 
+        var settings = new QuestionAccordion
         {
-            string collapsName = "collapse" + question.Id;
-            <div class="card">
-                <div class="card-header" id="@question.Id">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#@collapsName" aria-expanded="true" aria-controls="@collapsName">
-                            @question.Text
-                        </button>
-                    </h5>
-                </div>
-                <div id="@collapsName" class="collapse" aria-labelledby="@question.Id" data-parent="#accordion">
-                    <div class="card-body">
-                        @foreach (Answer answer in question.Answers)
-                        {
-                            @answer.Text <br />
-                        }
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-
+            Id= "accordion",
+            Questions = Model.Questions
+        };
+    }
+    <vc:questions-accordion settings="settings"></vc:questions-accordion>
     <div>
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
         <a asp-action="Index">Back to List</a>
